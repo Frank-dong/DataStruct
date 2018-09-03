@@ -12,6 +12,18 @@ int main(int argc, char* argv[])
 
 
 	ret = sqlist_init(&sqlist, 10);
+
+	for (i = 0; i < 8; ++i) {
+		item.data = a_test_data[i];
+		sqlist_insert(sqlist, 0, &item);
+	}
+
+	printf("Traverse list:");
+	sqlist_traverse(sqlist);
+	printf("now clear the list.\r\n");
+	sqlist_clear(sqlist);
+	printf("Traverse list:");
+	sqlist_traverse(sqlist);
 	
 	item.data = 1;
 	sqlist_insert(sqlist, 0, &item);
@@ -41,7 +53,7 @@ int main(int argc, char* argv[])
 
 	printf("length = %d.\r\n", sqlist_getlength(sqlist));
 	ret = sqlist_del(sqlist, 0);
-	printf("ret = 0x%x, 0x%x\r\n", ret, 0x1000 + 2);
+	printf("ret = -0x%x\r\n", 0-ret);
 	sqlist_traverse(sqlist);
 	
 	sqlist_deinit(sqlist);

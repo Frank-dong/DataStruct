@@ -62,7 +62,7 @@ int sqlist_insert(sqlist_t* list, int pos, SqlistDataType* item)
 }
 
 /**
- * 注意：可以删除的合法位置是[0, length]
+ * 注意：可以删除的合法位置是[0, length-1]
  */
 
 int sqlist_del(sqlist_t* list, int pos)
@@ -96,6 +96,7 @@ int sqlist_getitem(sqlist_t* list, int pos, SqlistDataType* data)
 	return RST_SUCCESS;
 }
 
+
 int sqlist_findpos(sqlist_t* list, SqlistDataType data)
 {
 	int i = 0;
@@ -106,16 +107,29 @@ int sqlist_findpos(sqlist_t* list, SqlistDataType data)
 		if (data.data == list->items[i].data)
 			break;
 	}
-	return RST_SUCCESS;
+	if (i >= list->length)
+		return RST_NOTFOUND;
+	return i;
 }
 
 int sqlist_isempty(sqlist_t* list)
 {
-	return RST_SUCCESS;
+	if (!list)
+		return RST_PARAMERR;
+	if (list->length <= 0)
+		return TRUE;
+	else 
+		return FALSE;
 }
 
 int sqlist_clear(sqlist_t* list)
 {
+	if (!list)
+		return RST_PARAMERR;
+
+	memset(list->items, 0, list->length * sizeof(SqlistDataType));
+	list->length = 0;
+	
 	return RST_SUCCESS;
 }
 

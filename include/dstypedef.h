@@ -6,12 +6,20 @@
 #include <string.h>
 
 //------------------- maroc -------------------------
-#define RST_SUCCESS		(0)
-#define RST_PARAMERR	(-1)
+enum BOOL {
+	FALSE = 0,
+	TRUE  = 1,
+};
 
-#define RSTSQLIST_BASE	(0x1000)
-#define RSTSQLIST_FULL	(RSTSQLIST_BASE + 1)
-#define RSTSQLIST_EMPTY	(RSTSQLIST_BASE + 2)
+#define RST_SUCCESS		(0)
+#define RST_ERROR		(-1)
+#define RST_PARAMERR	(-2)
+#define RST_NOTFOUND	(-3)
+
+
+#define RSTSQLIST_BASE	(-0x1000)
+#define RSTSQLIST_FULL	(RSTSQLIST_BASE - 1)
+#define RSTSQLIST_EMPTY	(RSTSQLIST_BASE - 2)
 
 
 //------------------- Sequence Table ---------------
