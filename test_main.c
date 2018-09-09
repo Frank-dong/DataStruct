@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include "dstypedef.h"
 
+#define SQLIST	1
+#define DLINKLIST 2
+
+#define DEBUG_MODULE	DLINKLIST
 
 int main(int argc, char* argv[])
 {
 	int 		ret = 0;
 	int			i = 0;
 	int			a_test_data[8] = {5, 1, 6, 8, 10, 100, 65, 2};
+
+	#if DEBUG_MODULE == SQLIST
 	sqlist_t*	sqlist;
 	SqlistDataType	item;
 
@@ -57,6 +63,37 @@ int main(int argc, char* argv[])
 	sqlist_traverse(sqlist);
 	
 	sqlist_deinit(sqlist);
+	...
+	#elif DEBUG_MODULE == DLINKLIST
+
+	pdlinklist_t	list;
+	data_type_t		data;
+
+	ret |= d_linklist_init(&list);
+	ret |= d_listlist_traverse(list);
+
+	data.data = 10;
+	ret |= d_linklist_insert(list, 0, &data);
+
+	data.data = 1232;
+	ret |= d_linklist_insert(list, 0, &data);
+
+	data.data = 129898;
+	ret |= d_linklist_insert(list, 2, &data);
+
+	ret |= d_listlist_traverse(list);
+
+	data.data = 0;
+	ret |= d_linklist_del(list, 2, &data);
+	printf("deled %d.\r\n", data.data);
+
+	ret |= d_listlist_traverse(list);
+
+	d_linklist_deinit(list);
+
+	ret |= d_listlist_traverse(list);
+	
+	#endif
 	
 	return 0;
 }

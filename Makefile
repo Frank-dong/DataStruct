@@ -17,12 +17,12 @@ OBJ = ${patsubst %.c, %.o, $(SRC)}
 $(TARGET):check_dir $(OBJ)
 	echo $(SRC) 
 	echo $(OBJ)
-	gcc test_main.c -o $@ $(CFLAG) -L$(LIBRARY_PATH) -I$(C_INCLUDE_PATH)  
+	gcc -shared -o libds.so $(OBJS_DIR)/*.o
+	@cp -arf libds.so $(LIBRARY_PATH)
+	gcc test_main.c -o $@ $(CFLAG) -L$(LIBRARY_PATH) -I$(C_INCLUDE_PATH)
 
 $(OBJ):%.o:%.c
 	gcc $(C_LIB_FLAG) -I$(C_INCLUDE_PATH) $^ -o $(OBJS_DIR)/$(notdir $@)
-	gcc -shared -o libds.so $(OBJS_DIR)/$(notdir $@)
-	@cp -arf libds.so $(LIBRARY_PATH)
 
 check_dir:
 	-mkdir -p $(LIBRARY_PATH) 
