@@ -16,21 +16,22 @@ int d_linklist_init(pdlinklist_t* head)
 	return RST_SUCCESS;
 }
 
-int d_linklist_deinit(pdlinklist_t head)
+int d_linklist_deinit(pdlinklist_t* head)
 {
 	dlink_t*	tmp = NULL; 
 	dlink_t*	freenode = NULL;
 		
-	if (!head)
+	if (!(*head))
 		return RST_PARAMERR;
 
-	tmp = head->next;
-	while(tmp != head) {
+	tmp = (*head)->next;
+	while(tmp != (*head)) {
 		freenode = tmp;
 		tmp = tmp->next;
 		free(freenode);
 	}
 	free(tmp);
+	*head = NULL;
 
 	return RST_SUCCESS;
 }
@@ -107,7 +108,7 @@ int d_linklist_del(pdlinklist_t list, int pos, data_type_t* item)
 	tmp->pre->next = tmp->next;
 	tmp->next->pre = tmp->pre;
 
-	if (!item)
+	if (item)
 		memcpy(item, &tmp->data, sizeof(data_type_t));
 
 	free(tmp);
@@ -179,6 +180,11 @@ int d_listlist_traverse(pdlinklist_t list)
 
 	return RST_SUCCESS;
 }
+
+
+/*-------------------------- 下面是linux内核中的实现方式 -----------------------------------*/
+
+
 
 
 
